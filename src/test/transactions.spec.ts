@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../app";
-import { afterAll, beforeAll, it, describe, expect } from "vitest";
+import {execSync} from "node:child_process";
+import { afterAll, beforeAll, it, describe, expect, beforeEach } from "vitest";
 
 describe("transactions routes", () => {
   beforeAll(async () => {
@@ -9,6 +10,11 @@ describe("transactions routes", () => {
   afterAll(async () => {
     await app.close();
   });
+  beforeEach(() => {
+    // para cada teste o banco é apagado e criado de novo 
+    execSync("npm run knex migrate:rollback --all")
+    execSync("npm run knex migrate:latest")
+  })
 
   it("should be able to create a new transactions", async () => {
     await request(app.server)
@@ -46,3 +52,4 @@ describe("transactions routes", () => {
   });
 
 });
+
