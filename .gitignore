@@ -2,10 +2,7 @@
 node_modules
 
 # Databases
-tmp
-db
-db/test.db
-
+db/*.db
 # Environment
 .env
 .env.test
